@@ -1,0 +1,14 @@
+{
+  "name": "lightning-http",
+  "version": "0.1.0",
+  "description": "Node.js binding for lightning - extremely fast HTTP/1.1 parser",
+  "main": "lightning.js",
+  "scripts": {
+    "example": "node example.js"
+  },
+  "keywords": ["http", "parser", "simd", "zero-copy"],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "ffi-napi": "^2.1.2"
+  }
+}

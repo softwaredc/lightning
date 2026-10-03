@@ -1,0 +1,21 @@
+---
+BasedOnStyle: LLVM
+Language: C
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 80
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+BreakBeforeBraces: Allman
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: true
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+SpaceAfterCStyleCast: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+PointerAlignment: Right

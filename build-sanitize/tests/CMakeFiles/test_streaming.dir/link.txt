@@ -1,0 +1,1 @@
+/usr/bin/cc -g -fsanitize=address,undefined CMakeFiles/test_streaming.dir/test_streaming.c.o -o test_streaming  ../liblightning.a 

@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build-test:
+    name: Build & Test (${{ matrix.cc }}, ${{ matrix.sanitizer }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [gcc-13, clang-18]
+        sanitizer: [none, asan, ubsan]
+        include:
+          - cc: gcc-13
+            cxx: g++-13
+          - cc: clang-18
+            cxx: clang++-18
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install compiler
+        run: |
+          sudo apt-get update -qq
+          if [[ "${{ matrix.cc }}" == "gcc-13" ]]; then
+            sudo apt-get install -y -qq gcc-13 g++-13
+          else
+            sudo apt-get install -y -qq clang-18
+          fi
+
+      - name: Configure (no sanitizer)
+        if: matrix.sanitizer == 'none'
+        run: |
+          cmake -B build -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_C_FLAGS="-O2 -Wall -Wextra"
+
+      - name: Configure (ASan)
+        if: matrix.sanitizer == 'asan'
+        run: |
+          cmake -B build -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_C_FLAGS="-fsanitize=address -fno-sanitize-recover=all -g -O1"
+
+      - name: Configure (UBSan)
+        if: matrix.sanitizer == 'ubsan'
+        run: |
+          cmake -B build -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_C_FLAGS="-fsanitize=undefined -fno-sanitize-recover=all -g -O1"
+
+      - name: Build
+        run: cmake --build build -j$(nproc)
+
+      - name: Run tests
+        run: |
+          cd build
+          ctest --output-on-failure
+
+      - name: Run benchmarks (sanitizer=none only)
+        if: matrix.sanitizer == 'none' && matrix.cc == 'gcc-13'
+        run: |
+          cd build
+          ./benchmarks/bench_parser || true
+
+  multi-language:
+    name: Language Bindings
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cmake build-essential python3 python3-pip golang-go cargo
+
+      - name: Build C library
+        run: |
+          cmake -B build -DCMAKE_C_FLAGS="-O2 -fPIC"
+          cmake --build build -j$(nproc)
+
+      - name: Test Python binding
+        run: |
+          PYTHONPATH=bindings/python LD_LIBRARY_PATH=build python3 bindings/python/lightning/example.py
+
+      - name: Test Go binding
+        run: |
+          cd bindings/go/lightning
+          go mod init lightning || true
+          LD_LIBRARY_PATH=$GITHUB_WORKSPACE/build go test -v
+
+      - name: Test Rust binding
+        run: |
+          cd bindings/rust/lightning-sys
+          LD_LIBRARY_PATH=$GITHUB_WORKSPACE/build cargo run --example example

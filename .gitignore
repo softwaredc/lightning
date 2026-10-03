@@ -1,0 +1,35 @@
+# Build artifacts
+build/
+build-san/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+
+# Go (go.mod is committed for library packages)
+bindings/go/lightning/go.sum
+
+# Rust
+bindings/rust/lightning-sys/target/
+bindings/rust/lightning-sys/Cargo.lock
+
+# Node
+node_modules/
+
+# Logs
+*.log

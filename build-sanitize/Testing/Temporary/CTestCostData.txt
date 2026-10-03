@@ -1,0 +1,6 @@
+test_parser 1 0.0265854
+test_chunked 1 0.011194
+test_url 1 0.0144243
+test_streaming 1 0.0124139
+test_fuzz 1 0.0443509
+---

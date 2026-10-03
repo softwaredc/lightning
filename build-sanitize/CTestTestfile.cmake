@@ -1,0 +1,9 @@
+# CMake generated Testfile for 
+# Source directory: /mnt/d/TigerCo/知识分享业务群/github/lightning
+# Build directory: /mnt/d/TigerCo/知识分享业务群/github/lightning/build-sanitize
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+subdirs("tests")
+subdirs("benchmarks")
+subdirs("examples")

@@ -1,0 +1,1 @@
+/usr/bin/cc -g -fsanitize=address,undefined CMakeFiles/test_chunked.dir/test_chunked.c.o -o test_chunked  ../liblightning.a 

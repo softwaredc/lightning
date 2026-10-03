@@ -1,0 +1,1 @@
+/usr/bin/cc -g -fsanitize=address,undefined CMakeFiles/test_fuzz.dir/test_fuzz.c.o -o test_fuzz  ../liblightning.a 

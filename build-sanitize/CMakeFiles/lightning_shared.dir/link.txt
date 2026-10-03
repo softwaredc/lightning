@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC -g -shared -Wl,-soname,liblightning.so -o liblightning.so CMakeFiles/lightning_shared.dir/src/lightning.c.o CMakeFiles/lightning_shared.dir/src/chunked.c.o CMakeFiles/lightning_shared.dir/src/url.c.o 

@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblightning.a CMakeFiles/lightning.dir/src/lightning.c.o CMakeFiles/lightning.dir/src/chunked.c.o CMakeFiles/lightning.dir/src/url.c.o
+/usr/bin/ranlib liblightning.a
